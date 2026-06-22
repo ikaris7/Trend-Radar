@@ -13,3 +13,4 @@ Envie todos os arquivos e pastas deste projeto, mantendo `api/news.js` dentro da
 5. Teste: `https://SEU-PROJETO.vercel.app/api/news?q=OpenAI`
 
 A chave não deve ser colocada em nenhum arquivo do projeto.
+
