@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="theme-color" content="#050b18" />
+  <title>TrendRadar IA</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div id="toast" class="toast"></div>
+
+  <section id="authView" class="auth-view">
+    <div class="auth-bg auth-left">
+      <div class="pixel-map"></div>
+      <div class="ghost-card trend-card">
+        <span class="eyebrow">TENDÊNCIAS</span>
+        <svg viewBox="0 0 300 110" aria-hidden="true"><polyline points="4,86 25,73 42,79 66,57 88,66 111,49 135,60 158,35 184,57 205,45 229,50 251,27 275,39 296,10" /></svg>
+      </div>
+      <div class="ghost-card latest-card">
+        <span class="eyebrow">ÚLTIMAS NOTÍCIAS</span>
+        <div class="mini-news"><img src="https://images.unsplash.com/photo-1605901309584-818e25960a8f?auto=format&fit=crop&w=200&q=70"><div>Novo trailer de GTA 6 é divulgado oficialmente<small>Adrenaline • 2h atrás</small></div></div>
+        <div class="mini-news"><img src="https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&fit=crop&w=200&q=70"><div>Neymar volta a treinar com a seleção<small>Globo Esporte • 3h atrás</small></div></div>
+      </div>
+    </div>
+
+    <form id="loginForm" class="auth-card">
+      <div class="radar-logo big"><span></span></div>
+      <h1>Bem-vindo de <strong>volta!</strong></h1>
+      <p>Faça login para continuar monitorando<br>as tendências que importam para você.</p>
+      <label class="field"><span>♙</span><input id="loginName" required placeholder="Nome de usuário"></label>
+      <label class="field"><span>✉</span><input id="loginEmail" type="email" required placeholder="E-mail"></label>
+      <label class="field"><span>▣</span><input id="loginPassword" type="password" required minlength="4" placeholder="Senha"><button type="button" class="eye" id="togglePassword">◉</button></label>
+      <div class="auth-row"><label><input type="checkbox"> Lembrar-me</label><button type="button" class="text-btn">Esqueceu a senha?</button></div>
+      <button class="primary-btn" type="submit">Entrar</button>
+      <div class="or"><span></span>ou<span></span></div>
+      <button class="outline-btn" type="button" id="createAccount">Criar nova conta</button>
+      <small class="terms">Ao continuar, você concorda com nossos <u>Termos de Uso</u> e <u>Política de Privacidade</u>.</small>
+    </form>
+
+    <div class="auth-bg auth-right">
+      <div class="ghost-card important-card"><span class="eyebrow">ALERTA IMPORTANTE</span><div class="bell-large">●</div><b>Trailer oficial de GTA 6 lançado!</b><small>Fonte: Rockstar Games<br>22/05/2026 • 14:30</small></div>
+      <div class="ghost-card ranking-card"><span class="eyebrow">ASSUNTOS EM ALTA</span><ol><li>GTA 6 <i>↑</i></li><li>Neymar <i>↑</i></li><li>Vingadores 5 <i>↑</i></li><li>PlayStation 5 Pro <em>↓</em></li><li>OpenAI <i>↑</i></li></ol></div>
+    </div>
+  </section>
+
+  <section id="appView" class="app-view hidden">
+    <aside class="sidebar" id="sidebar">
+      <div class="brand"><div class="radar-logo"><span></span></div><div>Trend<span>Radar</span><small>IA</small></div></div>
+      <nav id="nav">
+        <button data-page="dashboard" class="active">⌂ <span>Início</span></button>
+        <button data-page="interests">☆ <span>Interesses</span></button>
+        <button data-page="search">⌕ <span>Pesquisar</span></button>
+        <button data-page="alerts">♧ <span>Alertas</span><b id="navAlertCount">0</b></button>
+        <button data-page="reports">▥ <span>Relatórios</span></button>
+        <button data-page="sources">▽ <span>Fontes</span></button>
+        <button data-page="settings">⚙ <span>Configurações</span></button>
+      </nav>
+      <div class="profile-box"><div id="avatarLetter" class="avatar">C</div><strong id="sideName">Carlos</strong><small id="sideEmail">carlos@email.com</small><span>Plano Gratuito</span><button id="logoutBtn">↪ &nbsp; Sair</button></div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <button class="menu-btn" id="menuBtn">☰</button>
+        <div id="welcome"><h2>Olá, <span id="welcomeName">Carlos</span>! 👋</h2><p>Aqui está o resumo das tendências do momento.</p></div>
+        <label class="global-search">⌕<input id="globalSearch" placeholder="Buscar qualquer assunto..."><kbd>Ctrl + K</kbd></label>
+        <button class="icon-btn" id="notifyBtn">♧<b id="topAlertCount">0</b></button>
+        <button class="icon-btn" id="themeBtn">☾</button>
+        <div class="top-avatar" id="topAvatar">C</div>
+      </header>
+
+      <div id="pageHost"></div>
+    </main>
+  </section>
+
+  <template id="dashboardTpl">
+    <section class="page dashboard-page">
+      <div class="metrics">
+        <article><div class="metric-icon purple">↗</div><div><small>Interesses ativos</small><strong id="metricInterests">0</strong><em>+2 novos esta semana</em></div><div class="spark purple-line"></div></article>
+        <article><div class="metric-icon blue">♟</div><div><small>Alertas hoje</small><strong id="metricAlerts">0</strong><em class="orange">importantes</em></div><div class="bars"></div></article>
+        <article><div class="metric-icon green">↗</div><div><small>Notícias coletadas</small><strong id="metricNews">0</strong><em>Últimas 24h</em></div><div class="spark green-line"></div></article>
+        <article><div class="metric-icon amber">◎</div><div><small>Temas em alta</small><strong id="metricTrending">0</strong><em>Em seus interesses</em></div></article>
+      </div>
+
+      <div class="dashboard-grid">
+        <div class="left-stack">
+          <article class="panel monitored-panel"><div class="panel-head"><h3>Interesses monitorados</h3><button data-go="interests">Ver todos →</button></div><div id="interestCards" class="interest-cards"></div></article>
+          <article class="panel summary-panel"><h3>Resumo de hoje</h3><div class="summary-content"><div class="donut"><span id="donutTotal">0<small>notícias</small></span></div><ul id="categoryLegend"></ul><div class="peak"><small>Pico de atividade</small><strong>14:00 - 16:00</strong><p>Maior volume de notícias<br>nas últimas 24h</p><div class="activity-graph"></div></div></div></article>
+          <article class="panel"><div class="panel-head"><h3>Últimas notícias</h3><button data-go="search">Ver todas →</button></div><div id="latestNews" class="news-list"></div></article>
+        </div>
+        <div class="right-stack">
+          <article class="panel"><div class="panel-head"><h3>Alertas importantes</h3><button data-go="alerts">Ver todos →</button></div><div id="importantAlerts" class="alert-list"></div><button class="wide-link" data-go="alerts">Ver todos os alertas →</button></article>
+          <article class="panel"><div class="panel-head"><h3>Atividade recente</h3><button>Ver tudo →</button></div><div id="activityList" class="activity-list"></div></article>
+        </div>
+      </div>
+    </section>
+  </template>
+
+  <template id="interestsTpl">
+    <section class="page interests-page">
+      <div class="page-title"><span>☆</span><div><h1>Interesses Monitorados</h1><p>Gerencie os temas que você deseja monitorar. O sistema buscará novidades e tendências relacionadas aos seus interesses.</p></div></div>
+      <div class="interests-layout">
+        <article class="panel interests-list-panel"><div class="panel-head"><h3>Seus interesses ativos <b id="interestCountBadge">0</b></h3><label>Ordenar por: <select id="sortInterests"><option value="recent">Mais recentes</option><option value="name">Nome</option><option value="priority">Prioridade</option></select></label></div><div id="interestsRows" class="interests-rows"></div></article>
+        <aside>
+          <form id="interestForm" class="panel add-interest"><div class="add-header"><div class="plus-box">＋</div><div><h3>Cadastrar novo interesse</h3><p>Adicione um novo tema para monitorar tendências e receber alertas relevantes.</p></div></div>
+            <label>Nome do interesse<input id="interestName" required placeholder="Ex.: The Last of Us"></label>
+            <label>Palavras-chave<input id="interestKeywords" required placeholder="Ex.: the last of us, tlou, hbo, série"><small>Separe por vírgulas</small></label>
+            <label>Prioridade<select id="interestPriority"><option value="high">🔴 Alta</option><option value="medium">🟡 Média</option><option value="low">🟢 Baixa</option></select><small>Define o nível de importância para os alertas</small></label>
+            <label>Fontes recomendadas<select id="interestSources"><option value="all">Todas as fontes confiáveis</option><option value="official">Sites oficiais</option><option value="news">Portais de notícias</option><option value="video">Vídeos</option></select><small>Você poderá alterar depois</small></label>
+            <div class="toggle-line"><div><b>Ativar monitoramento</b><small>Começar a monitorar imediatamente</small></div><label class="switch"><input id="interestActive" type="checkbox" checked><span></span></label></div>
+            <button class="primary-btn" type="submit">＋ &nbsp; Cadastrar interesse</button>
+          </form>
+          <article class="panel how"><h3>ⓘ &nbsp; Como funciona?</h3><p>Nosso sistema monitora as fontes selecionadas em busca de novidades sobre seus interesses. Você receberá alertas quando algo relevante for encontrado.</p></article>
+        </aside>
+      </div>
+    </section>
+  </template>
+
+  <template id="searchTpl"><section class="page simple-page"><div class="page-title"><span>⌕</span><div><h1>Pesquisar</h1><p>Busque notícias atuais em fontes reais.</p></div></div><form id="searchForm" class="search-box"><input id="searchInput" required placeholder="Ex.: Neymar Escócia"><button class="primary-btn">Pesquisar</button></form><div id="searchStatus" class="status"></div><div id="searchResults" class="search-results"></div></section></template>
+  <template id="alertsTpl"><section class="page simple-page"><div class="page-title"><span>♧</span><div><h1>Alertas</h1><p>Conteúdos relevantes identificados no monitoramento.</p></div></div><div id="allAlerts" class="alerts-page-list"></div></section></template>
+  <template id="reportsTpl"><section class="page simple-page"><div class="page-title"><span>▥</span><div><h1>Relatórios</h1><p>Estatísticas calculadas com base nas notícias coletadas.</p></div></div><div id="reportsGrid" class="reports-grid"></div><article class="panel report-chart"><h3>Evolução de notícias</h3><div id="reportBars" class="report-bars"></div></article></section></template>
+  <template id="sourcesTpl"><section class="page simple-page"><div class="page-title"><span>▽</span><div><h1>Fontes</h1><p>Fontes consultadas pelo monitoramento.</p></div></div><div class="sources-grid"><article class="panel"><h3>NewsData.io</h3><p>Notícias reais com título, imagem, fonte, data e link original.</p><span class="online">● Online</span></article><article class="panel"><h3>Sites originais</h3><p>Imagem, título, data e endereço da publicação.</p><span class="online">● Online</span></article><article class="panel"><h3>Feeds RSS</h3><p>Compatível com fontes públicas que fornecem RSS.</p><span class="online">● Online</span></article></div></section></template>
+  <template id="settingsTpl"><section class="page simple-page"><div class="page-title"><span>⚙</span><div><h1>Configurações</h1><p>A API é configurada com segurança nas variáveis da Vercel.</p></div></div><form id="settingsForm" class="panel settings-form"><label>API de notícias<input value="NewsData.io conectada pela Vercel" disabled></label><label>Intervalo de atualização<select id="pollInterval"><option value="300000">5 minutos</option><option value="900000">15 minutos</option><option value="1800000">30 minutos</option></select></label><button class="primary-btn">Salvar configurações</button></form></section></template>
+
+  <script src="app.js"></script>
+</body>
+</html>
